@@ -21,7 +21,7 @@ export class LoanEntity {
   @Column({ type: 'decimal', precision: 8, scale: 2 })
   value: number;
 
-  @Column({ enum: LoanStatus })
+  @Column({ type: 'enum', enum: LoanStatus, default: LoanStatus.pending })
   status: LoanStatus;
 
   @CreateDateColumn()

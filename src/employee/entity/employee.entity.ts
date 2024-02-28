@@ -18,13 +18,13 @@ export class EmployeeEntity {
   @Column({ unique: true, length: 11 })
   CPF: string;
 
-  @Column({ type: 'string', length: 127 })
+  @Column({ type: 'varchar', length: 127 })
   fullName: string;
 
-  @Column({ unique: true, type: 'string' })
+  @Column({ unique: true, type: 'varchar' })
   email: string;
 
-  @Column({ type: 'string' })
+  @Column({ type: 'varchar' })
   password: string;
 
   @Column({ type: 'decimal', precision: 8, scale: 2 })

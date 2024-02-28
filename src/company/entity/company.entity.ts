@@ -16,13 +16,13 @@ export class CompanyEntity {
   @Column({ unique: true, length: 14 })
   CNPJ: string;
 
-  @Column({ type: 'string', length: 127 })
+  @Column({ type: 'varchar', length: 127 })
   companyName: string;
 
-  @Column({ unique: true, type: 'string' })
+  @Column({ unique: true, type: 'varchar' })
   email: string;
 
-  @Column({ type: 'string' })
+  @Column({ type: 'varchar' })
   password: string;
 
   @CreateDateColumn()

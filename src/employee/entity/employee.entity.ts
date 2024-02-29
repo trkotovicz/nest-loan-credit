@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -37,6 +38,7 @@ export class EmployeeEntity {
   updatedAt: Date;
 
   @ManyToOne(() => CompanyEntity, (company) => company.employees)
+  @JoinColumn({ name: 'companyId' })
   company: CompanyEntity;
 
   @OneToMany(() => LoanEntity, (loan) => loan.employee)

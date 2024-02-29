@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -18,7 +17,6 @@ export class EmployeeService {
   constructor(
     @InjectRepository(EmployeeEntity)
     private employeeRepository: Repository<EmployeeEntity>,
-    @Inject()
     private companyService: CompanyService,
   ) {}
 
@@ -90,14 +88,30 @@ export class EmployeeService {
     data.password = await bcrypt.hash(data.password, salt);
 
     try {
-      data.CPF = data.CPF.replace(/[^\d]/g, '');
       if (
-        await this.employeeRepository.exists({ where: { email: data.email } })
+        (await this.employeeRepository.exists({
+          where: { email: data.email },
+        })) &&
+        (
+          await this.employeeRepository.findOne({
+            where: { email: data.email },
+          })
+        ).email !== data.email
       ) {
         throw new BadRequestException('Esse email já está sendo usado.');
       }
-      if (await this.employeeRepository.exists({ where: { CPF: data.CPF } })) {
-        throw new BadRequestException('Esse CPF já está sendo usado.');
+
+      if (
+        (await this.employeeRepository.exists({
+          where: { CPF: data.CPF },
+        })) &&
+        (
+          await this.employeeRepository.findOne({
+            where: { CPF: data.CPF },
+          })
+        ).CPF !== data.CPF
+      ) {
+        throw new BadRequestException('Esse email já está sendo usado.');
       }
 
       const findCompany = await this.companyService.readOne(data.company);

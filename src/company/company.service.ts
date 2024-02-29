@@ -81,7 +81,6 @@ export class CompanyService {
     data.password = await bcrypt.hash(data.password, salt);
 
     try {
-      data.CNPJ = data.CNPJ.replace(/[^\d]+/g, '');
       if (
         await this.companyRepository.exists({ where: { email: data.email } })
       ) {

@@ -3,16 +3,20 @@ import {
   Module,
   NestModule,
   RequestMethod,
+  forwardRef,
 } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CompanyService } from 'src/company/company.service';
+import { CompanyModule } from 'src/company/company.module';
 import { UserIdCheckMiddleware } from 'src/middlewares/user-id-check.middleware';
-import { EmployeeEntity } from './entity/employee.entity';
-import { EmployeeService } from './employee.service';
 import { EmployeeController } from './employee.controller';
+import { EmployeeService } from './employee.service';
+import { EmployeeEntity } from './entity/employee.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([EmployeeEntity]), CompanyService],
+  imports: [
+    TypeOrmModule.forFeature([EmployeeEntity]),
+    forwardRef(() => CompanyModule),
+  ],
   controllers: [EmployeeController],
   providers: [EmployeeService],
   exports: [EmployeeService],

@@ -7,8 +7,6 @@ import {
   MinLength,
   Validate,
   IsDecimal,
-  IsNumber,
-  IsPositive,
   Length,
 } from 'class-validator';
 import { IsCPFConstraint } from 'src/validators/cpf.validator';
@@ -34,12 +32,9 @@ export class CreateEmployeeDTO {
   password: string;
 
   @IsNotEmpty()
-  @IsDecimal({ force_decimal: true, decimal_digits: '2' })
-  @IsPositive()
+  @IsDecimal({ decimal_digits: '2' })
   salary: number;
 
   @IsNotEmpty()
-  @IsNumber()
-  @IsPositive()
   company: number;
 }

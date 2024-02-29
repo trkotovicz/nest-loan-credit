@@ -1,4 +1,4 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateCompanyDTO } from './create-company.dto';
 
-export class PatchPasswordDTO extends PartialType(CreateCompanyDTO) {}
+export class PatchPasswordCompanyDTO extends PartialType(CreateCompanyDTO) {}

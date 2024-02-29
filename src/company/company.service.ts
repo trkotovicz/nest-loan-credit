@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { CreateCompanyDTO } from './dto/create-company.dto';
-import { PatchPasswordDTO } from './dto/patch-password-company.dto';
+import { PatchPasswordCompanyDTO } from './dto/patch-password-company.dto';
 import { PutCompanyDTO } from './dto/put-company.dto';
 import { CompanyEntity } from './entity/company.entity';
 
@@ -48,11 +48,17 @@ export class CompanyService {
     return await this.companyRepository.findOne({ where: { companyId } });
   }
 
+  // async findByName(name: string) {
+  //   return await this.companyRepository.findOne({
+  //     where: { companyName: `%${name}%` },
+  //   });
+  // }
+
   async list() {
     return await this.companyRepository.find();
   }
 
-  async updatePassword(companyId: number, data: PatchPasswordDTO) {
+  async updatePassword(companyId: number, data: PatchPasswordCompanyDTO) {
     await this.exists(companyId);
 
     const salt = await bcrypt.genSalt();

@@ -9,12 +9,14 @@ import {
   IsDecimal,
   IsNumber,
   IsPositive,
+  Length,
 } from 'class-validator';
 import { IsCPFConstraint } from 'src/validators/cpf.validator';
 
 export class CreateEmployeeDTO {
   @IsNotEmpty()
   @Validate(IsCPFConstraint)
+  @Length(11)
   CPF: string;
 
   @IsNotEmpty()

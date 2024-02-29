@@ -8,27 +8,12 @@ import {
 @ValidatorConstraint({ name: 'isCPF', async: false })
 export class IsCPFConstraint implements ValidatorConstraintInterface {
   validate(cpf: string, args: ValidationArguments) {
-    let sum = 0;
-    let remainder: number;
+    const formattedCpf = cpf.replace(/[^\d]/g, '');
+    const cpfRegex = /^\d{11}$/;
 
-    cpf = cpf.replace(/[^\d]/g, ''); // remove caracteres não numéricos
-
-    if (cpf === '00000000000') return false; // CPFs inválidos conhecidos
-
-    for (let i = 1; i <= 9; i++)
-      sum = sum + parseInt(cpf.substring(i - 1, i)) * (11 - i);
-    remainder = (sum * 10) % 11;
-
-    if (remainder === 10 || remainder === 11) remainder = 0;
-    if (remainder !== parseInt(cpf.substring(9, 10))) return false;
-
-    sum = 0;
-    for (let i = 1; i <= 10; i++)
-      sum = sum + parseInt(cpf.substring(i - 1, i)) * (12 - i);
-    remainder = (sum * 10) % 11;
-
-    if (remainder === 10 || remainder === 11) remainder = 0;
-    if (remainder !== parseInt(cpf.substring(10, 11))) return false;
+    if (formattedCpf === '00000000000') return false;
+    if (formattedCpf.length !== 11) return false;
+    if (!cpfRegex.test(formattedCpf)) return false;
 
     return true;
   }

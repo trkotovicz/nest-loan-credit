@@ -10,7 +10,7 @@ import {
 import { ParamId } from 'src/decorators/param-id.decorator';
 import { CompanyService } from './company.service';
 import { CreateCompanyDTO } from './dto/create-company.dto';
-import { PatchPasswordDTO } from './dto/patch-password-company.dto';
+import { PatchPasswordCompanyDTO } from './dto/patch-password-company.dto';
 import { PutCompanyDTO } from './dto/put-company.dto';
 
 @Controller('companies')
@@ -38,7 +38,10 @@ export class CompanyController {
   }
 
   @Patch(':id')
-  async updatePassword(@Body() data: PatchPasswordDTO, @ParamId() id: number) {
+  async updatePassword(
+    @Body() data: PatchPasswordCompanyDTO,
+    @ParamId() id: number,
+  ) {
     return await this.companyService.updatePassword(id, data);
   }
 

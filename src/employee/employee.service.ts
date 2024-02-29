@@ -111,7 +111,7 @@ export class EmployeeService {
           })
         ).CPF !== data.CPF
       ) {
-        throw new BadRequestException('Esse email já está sendo usado.');
+        throw new BadRequestException('Esse CPF já está sendo usado.');
       }
 
       const findCompany = await this.companyService.readOne(data.company);

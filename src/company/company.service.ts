@@ -82,11 +82,28 @@ export class CompanyService {
 
     try {
       if (
-        await this.companyRepository.exists({ where: { email: data.email } })
+        (await this.companyRepository.exists({
+          where: { email: data.email },
+        })) &&
+        (
+          await this.companyRepository.findOne({
+            where: { email: data.email },
+          })
+        ).email !== data.email
       ) {
         throw new BadRequestException('Esse email já está sendo usado.');
       }
-      if (await this.companyRepository.exists({ where: { CNPJ: data.CNPJ } })) {
+
+      if (
+        (await this.companyRepository.exists({
+          where: { CNPJ: data.CNPJ },
+        })) &&
+        (
+          await this.companyRepository.findOne({
+            where: { CNPJ: data.CNPJ },
+          })
+        ).CNPJ !== data.CNPJ
+      ) {
         throw new BadRequestException('Esse CNPJ já está sendo usado.');
       }
 

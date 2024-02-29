@@ -17,7 +17,6 @@ export class Migrate1709084394389 implements MigrationInterface {
           {
             name: 'CNPJ',
             type: 'varchar',
-            length: '14',
             isUnique: true,
           },
           {

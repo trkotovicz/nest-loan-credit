@@ -13,16 +13,13 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    
     "db:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:create --dataSource ./src/typeorm/data-source.ts",
     "db:drop": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:drop --dataSource ./src/typeorm/data-source.ts",
-    
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -d ./src/typeorm/data-source.ts",
     "migration:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli migration:create ./src/typeorm/migrations/Migrate",
     "migration:generate": "npm run typeorm -- migration:generate ./src/typeorm/migrations/Migrate",
     "migration:run": "npm run build && npm run typeorm -- migration:run",
-    "migration:revert": "npm run typeorm -- migration:revert",    
-
+    "migration:revert": "npm run typeorm -- migration:revert",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -36,6 +33,7 @@
     "@nestjs/mapped-types": "^2.0.5",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.2",
+    "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "mysql2": "^3.9.2",

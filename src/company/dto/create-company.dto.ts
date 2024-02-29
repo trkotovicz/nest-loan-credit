@@ -3,6 +3,7 @@ import {
   IsNotEmpty,
   IsString,
   IsStrongPassword,
+  Length,
   MaxLength,
   MinLength,
   Validate,
@@ -11,6 +12,7 @@ import { IsCNPJConstraint } from 'src/validators/cnpj.validator';
 
 export class CreateCompanyDTO {
   @IsNotEmpty()
+  @Length(14)
   @Validate(IsCNPJConstraint)
   CNPJ: string;
 

@@ -13,7 +13,7 @@ export class CompanyEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   companyId: number;
 
-  @Column({ unique: true, length: 14 })
+  @Column({ unique: true })
   CNPJ: string;
 
   @Column({ type: 'varchar', length: 127 })

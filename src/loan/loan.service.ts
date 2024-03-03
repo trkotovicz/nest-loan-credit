@@ -91,7 +91,7 @@ export class LoanService {
       let { statusPayment, amountRequested } = requestObj;
       statusPayment = LoanStatus.rejected;
       amountRequested = Number(amount);
-      await this.saveLoanRejected({
+      await this.saveLoanRequest({
         employee: employeeId,
         amount: amountRequested,
         status: statusPayment,
@@ -110,8 +110,18 @@ export class LoanService {
         amountLimit.monthlyFinancingRequested;
       if (!paymentStatus.message) {
         requestObj.statusPayment = LoanStatus.pending;
+        await this.saveLoanRequest({
+          employee: employeeId,
+          amount: requestObj.amountRequested,
+          status: requestObj.statusPayment,
+        });
       } else {
         requestObj.statusPayment = LoanStatus.approved;
+        await this.saveLoanRequest({
+          employee: employeeId,
+          amount: requestObj.amountRequested,
+          status: requestObj.statusPayment,
+        });
       }
     }
     if (amount > amountLimit.amountAvailable) {
@@ -122,16 +132,17 @@ export class LoanService {
       requestObj.monthlyFinancingRequested =
         amountLimit.monthlyFinancingRequested;
       requestObj.statusPayment = LoanStatus.rejected;
+      await this.saveLoanRequest({
+        employee: employeeId,
+        amount: requestObj.amountRequested,
+        status: requestObj.statusPayment,
+      });
     }
 
     return requestObj;
   }
 
-  async saveLoanApproved() {
-    // loan entity - { loandId, amount, status, createdAt, employee }
-  }
-
-  async saveLoanRejected({ employee, amount, status }: CreateLoanDTO) {
+  async saveLoanRequest({ employee, amount, status }: CreateLoanDTO) {
     const employeeEntity = await this.employeeService.readOne(employee);
 
     await this.loanRepository.insert({
@@ -141,46 +152,3 @@ export class LoanService {
     });
   }
 }
-
-// loanRequest
-
-// SUCESSO
-// {
-//   amountAvailable: 176418.69,
-//   monthlyFinancingApproved: 2940.3115,
-//   amountRequested: '50000',
-//   monthlyFinancingRequested: 833.3333333333334,
-//   statusPayment: 'Aprovado'
-// }
-
-// SUCESSO - !paymentStatus
-// {
-// 	"amountAvailable": 176418.69,
-// 	"monthlyFinancingApproved": 2940.3115,
-// 	"amountRequested": "50000",
-// 	"monthlyFinancingRequested": 833.3333333333334,
-// 	"statusPayment": "Pendente"
-// }
-
-// FALHA - amountRequested > amountAvailable
-// {
-//   amountAvailable: 176418.69,
-//   monthlyFinancingApproved: 2940.3115,
-//   amountRequested: 500000,
-//   monthlyFinancingRequested: 8333.333333333334,
-//   statusPayment: 'Rejeitado'
-// }
-
-// FALHA - !score
-// {
-// 	"message": "Seu score é muito baixo no momento",
-// 	"error": "Bad Request",
-// 	"statusCode": 400
-// }
-
-// FALHA - empresa inválida
-// {
-// 	"message": "Código 2 diferente da empresa cadastrada para esse funcioário ",
-// 	"error": "Bad Request",
-// 	"statusCode": 400
-// }

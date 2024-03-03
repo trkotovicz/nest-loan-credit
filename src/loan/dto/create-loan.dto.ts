@@ -11,7 +11,7 @@ export class CreateLoanDTO {
   @IsNotEmpty()
   @IsDecimal({ force_decimal: true, decimal_digits: '2' })
   @IsPositive()
-  value: number;
+  amount: number;
 
   @IsNotEmpty()
   @IsEnum(LoanStatus)

@@ -19,6 +19,7 @@ export class PaymentApiService {
 
       return response.data;
     } catch (error) {
+      console.error('Error fetching Payment: ', error);
       throw new BadRequestException(error);
     }
   }

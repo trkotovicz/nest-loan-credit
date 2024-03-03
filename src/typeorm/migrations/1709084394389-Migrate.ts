@@ -127,7 +127,7 @@ export class Migrate1709084394389 implements MigrationInterface {
             unsigned: true,
           },
           {
-            name: 'value',
+            name: 'amount',
             type: 'decimal',
             precision: 8,
             scale: 2,

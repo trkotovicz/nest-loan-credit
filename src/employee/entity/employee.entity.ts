@@ -37,7 +37,9 @@ export class EmployeeEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => CompanyEntity, (company) => company.employees)
+  @ManyToOne(() => CompanyEntity, (company) => company.employees, {
+    eager: true,
+  })
   @JoinColumn({ name: 'companyId' })
   company: CompanyEntity;
 

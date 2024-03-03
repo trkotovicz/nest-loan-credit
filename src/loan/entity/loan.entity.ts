@@ -19,7 +19,7 @@ export class LoanEntity {
   loanId: number;
 
   @Column({ type: 'decimal', precision: 8, scale: 2 })
-  value: number;
+  amount: number;
 
   @Column({ type: 'enum', enum: LoanStatus, default: LoanStatus.pending })
   status: LoanStatus;

@@ -3,14 +3,25 @@ import {
   Module,
   NestModule,
   RequestMethod,
+  forwardRef,
 } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { EmployeeModule } from 'src/employee/employee.module';
 import { UserIdCheckMiddleware } from 'src/middlewares/user-id-check.middleware';
+import { LoanEntity } from './entity/loan.entity';
+import { LoanController } from './loan.controller';
+import { LoanService } from './loan.service';
+import { PaymentApiService } from './external-services/payment-api.service';
+import { ScoreApiService } from './external-services/score-api.service';
 
 @Module({
-  imports: [],
-  controllers: [],
-  providers: [],
-  exports: [],
+  imports: [
+    TypeOrmModule.forFeature([LoanEntity]),
+    forwardRef(() => EmployeeModule),
+  ],
+  controllers: [LoanController],
+  providers: [LoanService, PaymentApiService, ScoreApiService],
+  exports: [LoanService],
 })
 export class LoanModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

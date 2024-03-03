@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DBConfig } from './config/db.config';
 import { CompanyModule } from './company/company.module';
 import { EmployeeModule } from './employee/employee.module';
+import { LoanModule } from './loan/loan.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { EmployeeModule } from './employee/employee.module';
     }),
     forwardRef(() => CompanyModule),
     forwardRef(() => EmployeeModule),
+    forwardRef(() => LoanModule),
   ],
   controllers: [],
   providers: [],

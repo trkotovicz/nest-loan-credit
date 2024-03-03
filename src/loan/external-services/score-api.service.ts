@@ -15,14 +15,10 @@ export class ScoreApiService {
     try {
       const response = await axios.get(this._API_URL);
 
-      console.log('Raw Score API response:', response.data);
-
       const responseData = response.data.replace('"score: ', '"score": ');
       const fixedResponseData = responseData.slice(0, -1) + '}'; // fix syntax error from api mock
 
       const data = JSON.parse(fixedResponseData);
-
-      console.log('score request', data);
 
       return data;
     } catch (error) {

@@ -15,8 +15,6 @@ export class PaymentApiService {
     try {
       const response = await axios.get(this._API_URL);
 
-      console.log('payment request', response.data);
-
       return response.data;
     } catch (error) {
       console.error('Error fetching Payment: ', error);

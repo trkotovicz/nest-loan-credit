@@ -76,7 +76,6 @@ export class LoanService {
 
   async loanRequest(companyId: number, amount: number, employeeId: number) {
     await this.getEmployeeCompany(employeeId, companyId);
-    const score = await this.verifyIfHasScore(employeeId);
     const paymentStatus = await this.getPaymentStatus();
 
     const requestObj = {
@@ -87,17 +86,19 @@ export class LoanService {
       statusPayment: '',
     };
 
-    if (!score) {
+    if (!(await this.verifyIfHasScore(employeeId))) {
       requestObj.statusPayment = LoanStatus.rejected;
+      requestObj.amountRequested = Number(amount);
       throw new BadRequestException('Seu score é muito baixo no momento');
     }
 
     const amountLimit = await this.verifyAmountLimit(employeeId, amount);
+
     if (amount <= amountLimit.amountAvailable) {
       requestObj.amountAvailable = amountLimit.amountAvailable;
       requestObj.monthlyFinancingApproved =
         amountLimit.monthlyFinancingApproved;
-      requestObj.amountRequested = amountLimit.amountRequested;
+      requestObj.amountRequested = Number(amountLimit.amountRequested);
       requestObj.monthlyFinancingRequested =
         amountLimit.monthlyFinancingRequested;
       if (!paymentStatus.message) {
@@ -106,33 +107,59 @@ export class LoanService {
         requestObj.statusPayment = LoanStatus.approved;
       }
     }
+    if (amount > amountLimit.amountAvailable) {
+      requestObj.amountAvailable = amountLimit.amountAvailable;
+      requestObj.monthlyFinancingApproved =
+        amountLimit.monthlyFinancingApproved;
+      requestObj.amountRequested = Number(amountLimit.amountRequested);
+      requestObj.monthlyFinancingRequested =
+        amountLimit.monthlyFinancingRequested;
+      requestObj.statusPayment = LoanStatus.rejected;
+    }
 
     return requestObj;
   }
 }
 
-// 1. Solicitação: funcionário solicita empréstimo informando
+// loanRequest
+
+// SUCESSO
 // {
-//   payload { companyId, amount }
-//   req.param employeeId
+//   amountAvailable: 176418.69,
+//   monthlyFinancingApproved: 2940.3115,
+//   amountRequested: '50000',
+//   monthlyFinancingRequested: 833.3333333333334,
+//   statusPayment: 'Aprovado'
 // }
 
+// SUCESSO - !paymentStatus
 // {
-//   score && payment = aprovado
-//   score && !payment = pendente
-//   !score = negado
+// 	"amountAvailable": 176418.69,
+// 	"monthlyFinancingApproved": 2940.3115,
+// 	"amountRequested": "50000",
+// 	"monthlyFinancingRequested": 833.3333333333334,
+// 	"statusPayment": "Pendente"
 // }
 
-// OK - 2. Validação empresa: funcionário precisa ser funcionário da empresa informada no payload (companyId)
-
-// OK - 3. Validação da margem: calcula o valor máximo que pode solicitar e o número de parcelas. Valor máximo da parcela = 35% salário (definir prazo de 60 meses)
-
-// OK - 4. Validação Score: verifica se o cliente tem o score mínimo para o empréstimo:
+// FALHA - amountRequested > amountAvailable
 // {
-//   salários até R$ 2.000,00 score mínimo 400
-//   salários até R$ 4.000,00 score mínimo 500
-//   salários até R$ 8.000,00 score mínimo 600
-//   salários até R$ 12.000,00 score mínimo 700
+//   amountAvailable: 176418.69,
+//   monthlyFinancingApproved: 2940.3115,
+//   amountRequested: 500000,
+//   monthlyFinancingRequested: 8333.333333333334,
+//   statusPayment: 'Rejeitado'
 // }
 
-// OK - 5. Status: se score aprovado, verifica o status do pagamento
+// FALHA - !score
+// {
+// 	"message": "Seu score é muito baixo no momento",
+// 	"error": "Bad Request",
+// 	"statusCode": 400
+// }
+
+// FALHA - empresa inválida
+// {
+// 	"message": "Código 2 diferente da empresa cadastrada para esse funcioário ",
+// 	"error": "Bad Request",
+// 	"statusCode": 400
+// }

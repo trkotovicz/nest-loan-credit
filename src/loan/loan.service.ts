@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EmployeeService } from 'src/employee/employee.service';
 import { Repository } from 'typeorm';
+import { CreateLoanDTO } from './dto/create-loan.dto';
 import { LoanEntity, LoanStatus } from './entity/loan.entity';
 import { PaymentApiService } from './external-services/payment-api.service';
 import { ScoreApiService } from './external-services/score-api.service';
@@ -83,12 +84,18 @@ export class LoanService {
       monthlyFinancingApproved: 0,
       amountRequested: 0,
       monthlyFinancingRequested: 0,
-      statusPayment: '',
+      statusPayment: LoanStatus.pending,
     };
 
     if (!(await this.verifyIfHasScore(employeeId))) {
-      requestObj.statusPayment = LoanStatus.rejected;
-      requestObj.amountRequested = Number(amount);
+      let { statusPayment, amountRequested } = requestObj;
+      statusPayment = LoanStatus.rejected;
+      amountRequested = Number(amount);
+      await this.saveLoanRejected({
+        employee: employeeId,
+        amount: amountRequested,
+        status: statusPayment,
+      });
       throw new BadRequestException('Seu score é muito baixo no momento');
     }
 
@@ -118,6 +125,20 @@ export class LoanService {
     }
 
     return requestObj;
+  }
+
+  async saveLoanApproved() {
+    // loan entity - { loandId, amount, status, createdAt, employee }
+  }
+
+  async saveLoanRejected({ employee, amount, status }: CreateLoanDTO) {
+    const employeeEntity = await this.employeeService.readOne(employee);
+
+    await this.loanRepository.insert({
+      employee: employeeEntity,
+      amount,
+      status,
+    });
   }
 }
 

@@ -45,6 +45,19 @@ export class EmployeeEntity {
 
   @OneToMany(() => LoanEntity, (loan) => loan.employee)
   loans: LoanEntity[];
+
+  constructor(employ?: Partial<EmployeeEntity>) {
+    this.employeeId = employ?.employeeId;
+    this.CPF = employ?.CPF;
+    this.fullName = employ?.fullName;
+    this.email = employ?.email;
+    this.password = employ?.password;
+    this.salary = employ?.salary;
+    this.createdAt = employ?.createdAt;
+    this.updatedAt = employ?.updatedAt;
+    this.company = employ?.company;
+    this.loans = employ?.loans;
+  }
 }
 
 // Nome Completo (string)

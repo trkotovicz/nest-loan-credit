@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
-import { CompanyEntity } from 'src/company/entity/company.entity';
-import { EmployeeEntity } from 'src/employee/entity/employee.entity';
-import { LoanEntity } from 'src/loan/entity/loan.entity';
+import { CompanyEntity } from '../company/entity/company.entity';
+import { EmployeeEntity } from '../employee/entity/employee.entity';
+import { LoanEntity } from '../loan/entity/loan.entity';
 
 @Injectable()
 export class DBConfig implements TypeOrmOptionsFactory {

@@ -1,5 +1,5 @@
-import { CompanyEntity } from 'src/company/entity/company.entity';
-import { LoanEntity } from 'src/loan/entity/loan.entity';
+import { CompanyEntity } from '../../company/entity/company.entity';
+import { LoanEntity } from '../../loan/entity/loan.entity';
 import {
   Column,
   CreateDateColumn,

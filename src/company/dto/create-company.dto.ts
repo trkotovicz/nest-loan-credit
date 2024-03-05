@@ -8,7 +8,7 @@ import {
   MinLength,
   Validate,
 } from 'class-validator';
-import { IsCNPJConstraint } from 'src/validators/cnpj.validator';
+import { IsCNPJConstraint } from '../../validators/cnpj.validator';
 
 export class CreateCompanyDTO {
   @IsNotEmpty()

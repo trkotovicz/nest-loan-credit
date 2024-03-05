@@ -6,8 +6,8 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CompanyModule } from 'src/company/company.module';
-import { UserIdCheckMiddleware } from 'src/middlewares/user-id-check.middleware';
+import { CompanyModule } from '../company/company.module';
+import { UserIdCheckMiddleware } from '../middlewares/user-id-check.middleware';
 import { EmployeeController } from './employee.controller';
 import { EmployeeService } from './employee.service';
 import { EmployeeEntity } from './entity/employee.entity';

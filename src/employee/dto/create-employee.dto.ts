@@ -9,7 +9,7 @@ import {
   IsDecimal,
   Length,
 } from 'class-validator';
-import { IsCPFConstraint } from 'src/validators/cpf.validator';
+import { IsCPFConstraint } from '../../validators/cpf.validator';
 
 export class CreateEmployeeDTO {
   @IsNotEmpty()

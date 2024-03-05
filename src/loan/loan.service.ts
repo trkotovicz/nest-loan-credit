@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EmployeeService } from 'src/employee/employee.service';
+import { EmployeeService } from '../employee/employee.service';
 import { Repository } from 'typeorm';
 import { CreateLoanDTO } from './dto/create-loan.dto';
 import { LoanEntity, LoanStatus } from './entity/loan.entity';

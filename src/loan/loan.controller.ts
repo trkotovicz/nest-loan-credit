@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ParamId } from 'src/decorators/param-id.decorator';
+import { ParamId } from '../decorators/param-id.decorator';
 import { LoanService } from './loan.service';
 
 @Controller('users/:id/loan')

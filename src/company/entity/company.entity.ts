@@ -1,4 +1,4 @@
-import { EmployeeEntity } from 'src/employee/entity/employee.entity';
+import { EmployeeEntity } from '../../employee/entity/employee.entity';
 import {
   Column,
   CreateDateColumn,
@@ -33,6 +33,17 @@ export class CompanyEntity {
 
   @OneToMany(() => EmployeeEntity, (employee) => employee.company)
   employees: EmployeeEntity[];
+
+  constructor(company?: Partial<CompanyEntity>) {
+    this.companyId = company?.companyId;
+    this.CNPJ = company?.CNPJ;
+    this.companyName = company?.companyName;
+    this.email = company?.email;
+    this.password = company?.password;
+    this.createdAt = company?.createdAt;
+    this.updatedAt = company?.updatedAt;
+    this.employees = company?.employees;
+  }
 }
 
 // CNPJ (string)

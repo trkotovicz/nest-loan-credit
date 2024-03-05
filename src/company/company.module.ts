@@ -5,7 +5,7 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserIdCheckMiddleware } from 'src/middlewares/user-id-check.middleware';
+import { UserIdCheckMiddleware } from '../middlewares/user-id-check.middleware';
 import { CompanyEntity } from './entity/company.entity';
 import { CompanyController } from './company.controller';
 import { CompanyService } from './company.service';

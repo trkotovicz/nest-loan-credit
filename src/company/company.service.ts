@@ -48,12 +48,6 @@ export class CompanyService {
     return await this.companyRepository.findOne({ where: { companyId } });
   }
 
-  // async findByName(name: string) {
-  //   return await this.companyRepository.findOne({
-  //     where: { companyName: `%${name}%` },
-  //   });
-  // }
-
   async list() {
     return await this.companyRepository.find();
   }
@@ -130,5 +124,6 @@ export class CompanyService {
   async exists(companyId: number) {
     if (!(await this.companyRepository.exists({ where: { companyId } })))
       throw new NotFoundException(`A empresa com id ${companyId} não existe.`);
+    return true;
   }
 }

@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ParamId } from 'src/decorators/param-id.decorator';
+import { ParamId } from '../decorators/param-id.decorator';
 import { CompanyService } from './company.service';
 import { CreateCompanyDTO } from './dto/create-company.dto';
 import { PatchPasswordCompanyDTO } from './dto/patch-password-company.dto';

@@ -123,7 +123,7 @@ export class EmployeeService {
 
       if (update.affected) return data;
     } catch (error) {
-      throw new BadRequestException(error);
+      throw error;
     }
   }
 
@@ -142,5 +142,6 @@ export class EmployeeService {
       throw new NotFoundException(
         `O funcionário com id ${employeeId} não existe.`,
       );
+    return true;
   }
 }

@@ -36,3 +36,27 @@ export const employeeList: EmployeeEntity[] = [
     company: new CompanyEntity(),
   }),
 ];
+
+export const newEmployeeEntity: EmployeeEntity = new EmployeeEntity({
+  employeeId: 1,
+  CPF: '11122233345',
+  fullName: 'Employee Test One',
+  email: 'firstemployee@email.com',
+  password: '$2b$10$pbDDdVY3CSyI2OBYbaAOUe/RWRxbW57hREulRcyb0UdlIiCW.U8ai',
+  salary: 5000,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  company: new CompanyEntity(),
+});
+
+export const updatedEmployeeEntity: EmployeeEntity = new EmployeeEntity({
+  employeeId: 1,
+  CPF: '11122233345',
+  fullName: 'Employee Test Updated',
+  email: 'updated@email.com',
+  password: '$2b$10$pbDDdVY3CSyI2OBYbaAOUe/RWRxbW57hREulRcyb0UdlIiCW.U8ai',
+  salary: 5000,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  company: new CompanyEntity(),
+});

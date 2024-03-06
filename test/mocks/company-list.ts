@@ -29,3 +29,23 @@ export const companyEntityList: CompanyEntity[] = [
     updatedAt: new Date(),
   }),
 ];
+
+export const newCompanyEntity: CompanyEntity = new CompanyEntity({
+  companyId: 1,
+  CNPJ: '99999999000199',
+  companyName: 'Company Test',
+  email: 'usertest@company.com',
+  password: '$2b$10$pbDDdVY3CSyI2OBYbaAOUe/RWRxbW57hREulRcyb0UdlIiCW.U8ai',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+});
+
+export const updatedCompanyEntity: CompanyEntity = new CompanyEntity({
+  companyId: 1,
+  CNPJ: '99999999000199',
+  companyName: 'Company Test Updated',
+  email: 'updated@company.com',
+  password: '$2b$10$pbDDdVY3CSyI2OBYbaAOUe/RWRxbW57hREulRcyb0UdlIiCW.U8ai',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+});

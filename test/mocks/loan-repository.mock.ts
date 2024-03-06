@@ -1,6 +1,14 @@
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { LoanEntity, LoanStatus } from '../../src/loan/entity/loan.entity';
 
+export const loanResponseMock = {
+  amountAvailable: 176418.69,
+  monthlyFinancingApproved: 2940.3115,
+  amountRequested: 5000,
+  monthlyFinancingRequested: 83.33333333333333,
+  statusPayment: 'Aprovado',
+};
+
 export const loanEntityMock = {
   loanId: 1,
   amount: 1000,

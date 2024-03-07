@@ -232,6 +232,77 @@ describe('App (e2e)', () => {
       expect(parsed.error).toEqual('Not Found');
     });
   });
+
+  describe('Loan (e2e)', () => {
+    it('Should return an object and 201 status code', async () => {
+      const saveEmployee = await request(app.getHttpServer())
+        .post('/employees')
+        .send(createEmployeeDTO);
+      employeeData = saveEmployee.body;
+      employeeId = employeeData.employeeId;
+
+      const data = { companyId: employeeData.company, amount: 5000 };
+
+      const response = await request(app.getHttpServer())
+        .post(`/users/${employeeId}/loan`)
+        .send(data);
+
+      expect(response.statusCode).toEqual(201);
+      expect(typeof response.body).toEqual('object');
+    });
+
+    it('Should return an object with the amount available, monthly financing and the status of the loan request', async () => {
+      const data = { companyId: employeeData.company, amount: 5000 };
+
+      const response = await request(app.getHttpServer())
+        .post(`/users/${employeeId}/loan`)
+        .send(data);
+
+      expect(response.body).toHaveProperty('amountAvailable');
+      expect(response.body).toHaveProperty('amountRequested');
+      expect(response.body).toHaveProperty('monthlyFinancingApproved');
+      expect(response.body).toHaveProperty('statusPayment');
+      expect(response.body.amountRequested).toEqual(data.amount);
+    });
+
+    it('Should return 400 status code and a message if employee score is too low', async () => {
+      const employeeLowSalary: CreateEmployeeDTO = {
+        CPF: '99988877765',
+        fullName: 'Employee Test',
+        email: 'new.employee@test.com',
+        password: 'P@ssword123',
+        salary: 1500,
+        company: companyId,
+      };
+      const saveEmployee = await request(app.getHttpServer())
+        .post('/employees')
+        .send(employeeLowSalary);
+
+      const data = { companyId, amount: 5000 };
+
+      const response = await request(app.getHttpServer())
+        .post(`/users/${saveEmployee.body.employeeId}/loan`)
+        .send(data);
+
+      const parsed = JSON.parse(response.text);
+
+      expect(response.statusCode).toEqual(400);
+      expect(parsed.message).toEqual('Seu score é muito baixo no momento');
+      expect(parsed.error).toEqual('Bad Request');
+    });
+
+    it('Should return 404 status code if employee does not exist', async () => {
+      const response = await request(app.getHttpServer())
+        .post(`/users/${150}/loan`)
+        .send({ companyId, amount: 5000 });
+
+      const parsed = JSON.parse(response.text);
+
+      expect(response.statusCode).toEqual(404);
+      expect(parsed.message).toEqual('O funcionário com id 150 não existe.');
+      expect(parsed.error).toEqual('Not Found');
+    });
+  });
 });
 
 // "pretest:e2e": "cross-env ENV=test npm run db:drop && cross-env ENV=test npm run db:create && cross-env ENV=test npm run migration:run",

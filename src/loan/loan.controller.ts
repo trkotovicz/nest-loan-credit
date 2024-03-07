@@ -10,16 +10,11 @@ export class LoanController {
   async sendLoanRequest(@ParamId() employeeId: number, @Body() data) {
     const { companyId, amount } = data;
 
-    console.log('Controller - data', data);
-    console.log('Controller - paramId', employeeId);
-
     const request = await this.loanService.loanRequest(
       companyId,
       amount,
       employeeId,
     );
-
-    console.log('Controller - request', request);
     return request;
   }
 }

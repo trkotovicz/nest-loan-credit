@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { EmployeeEntity } from '../../employee/entity/employee.entity';
 import {
   Column,
@@ -11,24 +12,31 @@ import {
 @Entity({ name: 'companies' })
 export class CompanyEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
+  @ApiProperty()
   companyId: number;
 
   @Column({ unique: true })
+  @ApiProperty()
   CNPJ: string;
 
   @Column({ type: 'varchar', length: 127 })
+  @ApiProperty()
   companyName: string;
 
   @Column({ unique: true, type: 'varchar' })
+  @ApiProperty()
   email: string;
 
   @Column({ type: 'varchar' })
+  @ApiProperty()
   password: string;
 
   @CreateDateColumn()
+  @ApiProperty()
   createdAt: Date;
 
   @UpdateDateColumn()
+  @ApiProperty()
   updatedAt: Date;
 
   @OneToMany(() => EmployeeEntity, (employee) => employee.company)

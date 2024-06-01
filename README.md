@@ -3,13 +3,13 @@
 
 The application simulates a payroll loan system.
 Applying for this type of loan works as follows:
-1. Partnership between Company and Creditit:
-A company establishes a partnership with Credifit to offer financial benefits to its employees, such as a payroll loan.
-2. Loan Request: Employees of the partner company access the Credifit application to request a loan.
-3. Validation of Available Margin: Credifit checks the employee's available margin for payroll, which cannot exceed 35% of their salary. It then shows the user the maximum amount they can request and the number of possible installments.
-4. Minimum Score Validation: Credifit checks whether the user has a minimum score to be able to request, according to internal business rules.
-5. Loan Granting: If the user's score is above the minimum, Credifit grants the loan to the employee.
-6. Discount on Payroll: Credifit coordinates with the partner company to discount the loan installment directly on the employee's payroll.
+1. Partnership between Company and a credit institution:
+A company establishes a partnership with a credit institution to offer financial benefits to its employees, such as a payroll loan.
+2. Loan Request: Employees of the partner company access the application to request a loan.
+3. Validation of Available Margin: the institution checks the employee's available margin for payroll, which cannot exceed 35% of their salary. It then shows the user the maximum amount they can request and the number of possible installments.
+4. Minimum Score Validation: the institution checks whether the user has a minimum score to be able to request, according to internal business rules.
+5. Loan Granting: If the user's score is above the minimum, credit institution grants the loan to the employee.
+6. Discount on Payroll: credit institution coordinates with the partner company to discount the loan installment directly on the employee's payroll.
 
 
 
